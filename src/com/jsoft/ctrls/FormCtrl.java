@@ -12,6 +12,9 @@ import com.jsoft.model.UserModel;
 @RequestMapping(value="form")
 public class FormCtrl {
 
+
+
+
 	@RequestMapping(value="test",method=RequestMethod.GET)
 	public String test(){
 		System.out.println("1");
