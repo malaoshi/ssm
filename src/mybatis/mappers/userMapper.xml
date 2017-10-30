@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置sql，跟user相关的sql都写在该xml中 -->
+<!-- 命名空间 -->
+<mapper namespace="userMapper" >
+    <!-- id：不能重复 -->
+    <!-- parameterType：map,key-value -->
+    <!-- 从map中取值：#{map中的key值} -->
+    
+    <insert id="inst" parameterType="map">
+    	insert into user (id,username,password) values(#{id},#{name},#{pwd})
+    </insert>
+    <insert id="inst2" parameterType="com.jsoft.model.UserModel">
+    	insert into user (id,username,password) values(#{id},#{username},#{password})
+    </insert>
+    
+    <delete id="deleteAll">
+    	delete from user
+    </delete>
+    
+    <!-- 基本数据类型、字符串，取值时：#{任意字符} -->
+    <delete id="deleteById" parameterType="string">
+    	delete from user where id=#{id}
+    </delete>
+    
+    <!-- jsp：jstl标签 -->
+    <!-- 批量删除，ognl标签 -->
+    <delete id="deleteByIds" parameterType="object[]">
+    	delete from user where id in 
+    	<foreach collection="array" item="it" open="(" separator="," close=")">
+    		#{it}
+    	</foreach>
+    </delete>
+    
+    <update id="update" parameterType="map">
+    	update user 
+    	set
+    		username=#{name},
+    		password=#{pwd}
+    	where 
+    		id=#{id}
+    </update>
+    
+    <update id="resetPwd" parameterType="map">
+    	update user
+    	set 
+    		password=#{pwd}
+    	where 
+    		id=#{id}
+    </update>
+    
+    <!-- ognl的if标签 -->
+    <!-- <set>标签处理多出来的逗号“,”，注意：逗号“,”一定要放在后面 -->
+    <update id="update2" parameterType="map">
+    	update user 
+    	<set>
+    		<if test="name!=null">
+    		username=#{name},
+    		</if>
+    		
+    		<if test="pwd!=null">
+    		password=#{pwd},
+    		</if>
+    	</set>
+    	where 
+    		id=#{id}
+    
+    </update>
+    
+    <select id="select" resultType="map" >
+    	select id,username,password from user
+    </select>
+    
+    <select id="selectByUsername" resultType="map" >
+    	select id,username,password,level from user where username=#{name}
+    </select>
+    
+    <select id="selectWhere" parameterType="map" resultType="map">
+    	select id,username,password from user
+    	<!-- <where>处理多余的and，and必须放在前面 -->
+    	<where> 
+    	<if test='id!=null and id!=""'>
+    	and id=#{id} 
+    	</if>
+    	<if test="name!=null">
+    	and username like "%"#{name}"%" 
+    	</if>
+    	<if test="pwd!=null">
+    	and password=#{pwd} 
+    	</if>
+    	</where>
+    </select>
+    
+    
+</mapper>

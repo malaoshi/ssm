@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置sql，跟user相关的sql都写在该xml中 -->
+<!-- 命名空间 -->
+<mapper namespace="channelMapper" >
+    
+    <!-- 第一次执行，是执行该sql语句了，以后在执行，没有查询该sql语句，而是从缓存中取出来了 -->
+    <select id="select" resultType="map" >
+    	select id,name,sort from channel 
+    	
+    </select>
+    <select id="select_test" useCache="false">
+    	select name from channel
+    </select>
+    
+    <update id="update" flushCache="true" ></update>
+    <insert id="insert" flushCache="true" ></insert>
+    <delete id="delete" flushCache="true" ></delete>
+    
+    <!-- 仅针对当前的mapper文件的<select>进行缓存 -->
+    <cache 
+    	eviction="FIFO"
+        flushInterval="60000"
+        size="1024"
+        readOnly="true"
+    />
+</mapper>

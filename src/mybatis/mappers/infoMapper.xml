@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置sql，跟user相关的sql都写在该xml中 -->
+<!-- 命名空间 -->
+<mapper namespace="infoMapper" >
+    
+    <!-- turnPage是map中的key，意思是从map中取出key是turnPage的对象，并将该对象的startNum取出来 -->
+    <!-- 分页查询时，一定要加order by id，不然同名记录会发生出现在第一页和第四页上 -->
+    <select id="select" resultType="map" >
+    	select id,title,content from info 
+    	<where>
+    		<if test='title!=null and title!=""'>
+		    	title like "%"#{title}"%"
+    		</if>
+    	</where>
+    	order by title,id
+    	limit #{turnPage.startNum},#{turnPage.rowInOnePage}
+    </select>
+    
+    <select id="select_count" resultType="int" >
+    	select count(*) from info
+    	<where>
+    		<if test='title!=null and title!=""'>
+		    	title like "%"#{title}"%"
+    		</if>
+    	</where>
+    </select>
+    
+</mapper>
