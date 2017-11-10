@@ -26,6 +26,8 @@ public class LoginCtrl {
 
 	@Resource(name="LoginSrv")
 	private LoginSrv loginSrv;
+
+	private String name;
 	
 	@RequestMapping("/doLogin")
 	public ModelAndView doLogin(HttpServletRequest req,HttpServletResponse resp,RedirectAttributes ra){
