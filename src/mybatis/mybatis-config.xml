@@ -9,7 +9,6 @@
         <setting name="defaultExecutorType" value="REUSE" /> 
 <!--    在null时也调用 setter,适应于返回Map,3.2版本以上可用。3.2.8有此设置    -->
         <setting name="callSettersOnNulls" value="true"/>
-        <setting name="cacheEnabled" value="true"/>
     </settings>
 
 	

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置sql，跟user相关的sql都写在该xml中 -->
+<!-- 命名空间 -->
+<mapper namespace="userMapper2" >
+    <insert id="save" parameterType="map">
+		insert into user (id,username,password,level,pinyin)values (#{id},#{username},#{password},#{level},#{pinyin})
+	</insert>
+	<!--id,username,password,level-->
+    <select id="login" resultType="map" >
+		select *  from user where username=#{aaa}
+
+	</select>
+	<select id="showUserList" parameterType="map" resultType="com.jsoft.pojo.User2">
+		select id,username,level from user
+		<where>
+			<if test='level!=null and level!=""'>
+				and level=#{level}
+			</if>
+			<if test='uname!=null and uname!=""'>
+				and username like "%"#{uname}"%"
+			</if>
+			<if test='py!=null and py!=""'>
+				and pinyin like "%"#{py}"%"
+			</if>
+		</where>
+		 order by level desc,id
+
+	</select>
+	<select id="find" parameterType="map" resultType="com.jsoft.pojo.User2">
+
+		select  id,username,level  from user
+		<where>
+			<if test='uname!=null and uname!=""'>
+				and ( username like "%"#{uname}"%" or pinyin like "%"#{uname}"%" )
+			</if>
+			<if test='level!=null and level!=""'>
+				and level=#{level}
+			</if>
+		</where>
+	</select>
+	<!-- 给该sql传递    【一个】   【基本数据类型】  的时候，#{aaa}可以随便写，但是要有命名规范  -->
+	<delete id="deleteById" >
+		delete from user where id=#{str}
+
+	</delete>
+	<!--  delete from user where id in    ('1','2') -->
+	<delete id="deleteByIds" >
+		delete from user where id in
+		<foreach collection="array" item="it" open="(" separator="," close=")">
+			#{it}
+		</foreach>
+	</delete>
+	<select id="showUserById" resultType="com.jsoft.pojo.User2">
+		select id,username,level from user where id=#{userId}
+
+	</select>
+
+	<update id="modifyById" parameterType="map">
+		update user
+		<set>
+			<if test="username!=null">
+			username=#{username},
+			</if>
+			<if test="level!=null">
+			level=#{level},
+			</if>
+			<if test="pwd!=null">
+			password=#{pwd},
+			</if>
+		</set>
+		where id=#{id}
+
+	</update>
+	<!-- 重置密码 -->
+	<update id="resetPwd" parameterType="map">
+		update user set password=#{pwd} where id=#{userId}
+
+	</update>
+</mapper>

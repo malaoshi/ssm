@@ -17,7 +17,7 @@
 	}
 %>
 jsp、html,前面的/，表示端口号后面的/
-<form action="login/doLogin" method="post">
+<form action="user2/login" method="post">
 用户名:<input name="username"><br/>
 密码:<input name="password"><br/>
 <input type="submit">

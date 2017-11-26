@@ -7,12 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-添加成功！<br/><br/>
-
-您好，${uname }<br/>
-<%
-String name=(String)request.getAttribute("uname");
-out.println("java:"+name);
-%>
+登录失败！<br/><br/>
+${msg}
 </body>
 </html>

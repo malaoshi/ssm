@@ -13,18 +13,21 @@ function doLogin(){
 	alert(JSON.stringify($('#myfrom').serialize()));
 	
 	$.ajax({   
-           url:'login/ajaxLogin',   
+           url:'login2/ajax',
            type:'post',   
            dataType:'json',//服务器端返回的数据格式是json
 		   data: $('#myfrom').serialize(),//发给服务器端的数据
            success:function(data){   //data:服务器端返回给浏览器端的数据
 			   alert(1);
-			   alert(JSON.stringify(data));
+			   alert(data);//object
+			   alert(JSON.stringify(data));//将json对象转为json字符串
 		   		//alert(data.name);
 		   		//alert(data.phone);
 		   		if(data.code==1){
 		   			location.href='index.jsp';
-		   		}
+		   		}else{
+		   		    alert(data.msg);
+                }
 		   		//alert(1);
            },
 		   error:function (XMLHttpRequest, textStatus, errorThrown) {
